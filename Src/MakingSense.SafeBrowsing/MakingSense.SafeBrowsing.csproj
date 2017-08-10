@@ -26,6 +26,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NetStandardImplicitPackageVersion>1.6.1</NetStandardImplicitPackageVersion>
     <MinClientVersion>2.12</MinClientVersion>
+    <IncludeProjectPriFile>false</IncludeProjectPriFile> <!-- See https://github.com/NuGet/Home/issues/5021 -->
   </PropertyGroup>
   <ItemGroup>
     <None Remove="**\*.orig" />
