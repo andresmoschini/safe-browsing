@@ -47,7 +47,7 @@ namespace MakingSense.SafeBrowsing.SimpleRegex
         public void Check_should_identify_dangerous_urls()
         {
             // Arrange
-            var sut = new SimpleRegexUrlChecker(new[]
+            var sut = SimpleRegexUrlChecker.CreateWithFixedList(new[]
             {
                 @"^.*jpe082ver\.info.*$",
                 @"^.*ntfl-promo2017.info.*$"
@@ -76,7 +76,7 @@ namespace MakingSense.SafeBrowsing.SimpleRegex
         public void Check_should_identify_safe_urls()
         {
             // Arrange
-            var sut = new SimpleRegexUrlChecker(new[]
+            var sut = SimpleRegexUrlChecker.CreateWithFixedList(new[]
             {
                 @"^.*jpe082ver\.info.*$",
                 @"^.*ntfl-promo2017\.info.*$"
@@ -96,7 +96,7 @@ namespace MakingSense.SafeBrowsing.SimpleRegex
         public void CheckAsync_should_identify_dangerous_urls()
         {
             // Arrange
-            var sut = new SimpleRegexUrlChecker(new[]
+            var sut = SimpleRegexUrlChecker.CreateWithFixedList(new[]
             {
                 @"^.*jpe082ver\.info.*$",
                 @"^.*ntfl-promo2017.info.*$"
@@ -125,7 +125,7 @@ namespace MakingSense.SafeBrowsing.SimpleRegex
         public void CheckAsync_should_identify_safe_urls()
         {
             // Arrange
-            var sut = new SimpleRegexUrlChecker(new[]
+            var sut = SimpleRegexUrlChecker.CreateWithFixedList(new[]
             {
                 @".*jpe082ver\.info.*$",
                 @"^.*ntfl-promo2017\.info.*$"

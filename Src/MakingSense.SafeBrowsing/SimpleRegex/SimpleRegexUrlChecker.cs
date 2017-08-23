@@ -28,18 +28,18 @@ namespace MakingSense.SafeBrowsing.SimpleRegex
         /// Create a new instance based on a list of patterns
         /// </summary>
         /// <param name="blacklistPatterns"></param>
-        public SimpleRegexUrlChecker(IEnumerable<string> blacklistPatterns)
-            : this(blacklistPatterns.Select(x => new Regex(x)))
+        public static SimpleRegexUrlChecker CreateWithFixedList(IEnumerable<string> blacklistPatterns)
         {
+            return CreateWithFixedList(blacklistPatterns.Select(x => new Regex(x)));
         }
 
         /// <summary>
         /// Create a new instance based on a list of regular expressions
         /// </summary>
         /// <param name="blacklist"></param>
-        public SimpleRegexUrlChecker(IEnumerable<Regex> blacklist)
-            : this(new SimpleRegexRules(blacklist))
+        public static SimpleRegexUrlChecker CreateWithFixedList(IEnumerable<Regex> blacklist)
         {
+            return new SimpleRegexUrlChecker(new SimpleRegexRules(blacklist));
         }
 
         /// <inheritdoc />
