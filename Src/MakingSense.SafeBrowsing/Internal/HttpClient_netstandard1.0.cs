@@ -15,6 +15,7 @@ namespace MakingSense.SafeBrowsing.Internal
     public class HttpClient : IHttpClient
     {
         private const int BUFFER_SIZE = 1024;
+        static readonly Encoding Utf8WithoutBom = new UTF8Encoding(false);
 
         /// <inheritdoc />
         public async Task<SimplifiedHttpResponse> GetStringAsync(string url, string ifNoneMatch = null)
@@ -63,6 +64,22 @@ namespace MakingSense.SafeBrowsing.Internal
             }
         }
 
+        private async Task WriteRequestContentAsync(HttpWebRequest request, string content)
+        {
+            var data = Utf8WithoutBom.GetBytes(content);
+            request.Headers[HttpRequestHeader.ContentLength] = data.Length.ToString();
+            request.Headers[HttpRequestHeader.ContentType] = "content-type: text/plain; charset=utf-8";
+
+            throw new NotImplementedException();
+            //using (var stream = request.())
+            //{
+            //    stream.Write(data, 0, data.Length);
+            //}
+
+            //var webResponse = await Task.Factory.FromAsync(request.BeginGetResponse, request.EndGetResponse, null);
+            //return (HttpWebResponse)webResponse;
+        }
+
         private async Task<string> GetStringAsync(HttpWebResponse response)
         {
             var buffer = new byte[BUFFER_SIZE];
@@ -82,6 +99,21 @@ namespace MakingSense.SafeBrowsing.Internal
                     }
                 }
             }
+        }
+
+        public async Task<string> PostStringAsync(string url, string body)
+        {
+
+            var request = WebRequest.CreateHttp(url);
+            request.Method = "POST";
+
+            await WriteRequestContentAsync(request, body);
+
+            var response = await SendAsync(request);
+
+            var newEtag = response.Headers["ETag"];
+
+            return await GetStringAsync(response);
         }
     }
 }

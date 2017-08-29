@@ -18,5 +18,13 @@ namespace MakingSense.SafeBrowsing
         /// <param name="ifNoneMatch"></param>
         /// <returns></returns>
         Task<SimplifiedHttpResponse> GetStringAsync(string url, string ifNoneMatch = null);
+
+        /// <summary>
+        /// Post data and get response body as string
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        Task<string> PostStringAsync(string url, string body);
     }
 }

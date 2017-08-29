@@ -36,6 +36,9 @@ namespace MakingSense.SafeBrowsing.CliExample
             // SimpleRegex
             var simpleRegexRulesUrl = "https://raw.githubusercontent.com/MakingSense/safe-browsing/resources/links-blacklist.txt";
 
+            // GoogleSafeBrowsing
+            string apikey = null;
+
             ArgumentSyntax.Parse(args, syntax =>
             {
                 syntax.DefineCommand("simple-regex", ref command, Command.SimpleRegex, "Test our naive Simple Regex implementation");
@@ -43,6 +46,7 @@ namespace MakingSense.SafeBrowsing.CliExample
                 syntax.DefineParameterList("urls", ref urls, "URLs to be verified");
 
                 syntax.DefineCommand("google-safe-browsing", ref command, Command.GoogleSafeBrowsing, "Test our Google Safe Browsing client implementation");
+                syntax.DefineOption("k|apikey", ref apikey, true, "Google API KEY");
                 syntax.DefineParameterList("urls", ref urls, "URLs to be verified");
 
                 syntax.ValidateRequiredParameters();
@@ -52,6 +56,8 @@ namespace MakingSense.SafeBrowsing.CliExample
             {
                 case Command.SimpleRegex:
                     return () => SimpleRegex.SimpleRegexExample.Run(simpleRegexRulesUrl, urls);
+                case Command.GoogleSafeBrowsing:
+                    return () => GoogleSafeBrowsing.GoogleSafeBrowsingExample.Run(apikey, urls);
                 default: throw new NotImplementedException();
             }
         }

@@ -10,9 +10,10 @@ namespace MakingSense.SafeBrowsing.Tests
     public class HttpClientDouble : IHttpClient
     {
         private Func<string, string, SimplifiedHttpResponse> _overrideGetString = (a, b) => new SimplifiedHttpResponse() { Body = string.Empty };
+        private Func<string, string, string> _overridePostString = (a, b) => string.Empty;
 
         /// <summary>
-        /// Set an exception fpr GetStringAsync
+        /// Set an exception for GetStringAsync
         /// </summary>
         /// <param name="exception"></param>
         public void Setup_GetString(Exception exception) =>
@@ -58,6 +59,44 @@ namespace MakingSense.SafeBrowsing.Tests
 
         public async Task<SimplifiedHttpResponse> GetStringAsync(string url, string ifNoneMatch = null) =>
             _overrideGetString(url, ifNoneMatch);
+
+        /// <summary>
+        /// Set an exception for PostStringAsync
+        /// </summary>
+        /// <param name="exception"></param>
+        public void Setup_PostString(Exception exception) =>
+            _overridePostString = (url, body) => throw exception;
+
+        /// <summary>
+        /// Set a result for PostStringAsync
+        /// </summary>
+        /// <param name="func"></param>
+        public void Setup_PostString(string responseBody) =>
+            _overridePostString = (url, body) => responseBody;
+
+        /// <summary>
+        /// Override PostStringAsync behavior
+        /// </summary>
+        /// <param name="func"></param>
+        public void Setup_PostString(Func<string> func) =>
+            _overridePostString = (url, body) => func();
+
+        /// <summary>
+        /// Override PostStringAsync behavior
+        /// </summary>
+        /// <param name="func"></param>
+        public void Setup_PostString(Func<string, string> func) =>
+            _overridePostString = (url, body) => func(url);
+
+        /// <summary>
+        /// Override PostStringAsync behavior
+        /// </summary>
+        /// <param name="func"></param>
+        public void Setup_PostString(Func<string, string, string> func) =>
+            _overridePostString = func;
+
+        public async Task<string> PostStringAsync(string url, string body = null) =>
+            _overridePostString(url, body);
     }
 }
 #pragma warning restore 1998

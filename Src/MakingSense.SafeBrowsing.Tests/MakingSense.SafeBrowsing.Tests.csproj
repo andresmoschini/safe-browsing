@@ -112,6 +112,12 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <None Update="GoogleSafeBrowsing\Response1.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp1.0'">
     <AssemblyTitle>SafeBrowsing.NET Tests .NET Standard 1.0</AssemblyTitle>
     <ReferringTargetFrameworkForProjectReferences>.NETStandard,Version=v1.0</ReferringTargetFrameworkForProjectReferences>
